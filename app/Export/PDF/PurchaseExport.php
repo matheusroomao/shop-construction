@@ -32,7 +32,7 @@ class PurchaseExport extends Fpdf
 
         //LOGO E TITULO
 
-        $this->Cell(30, 15, $this->Image(public_path('img/const.png'), $this->GetX() + (60 / 2 - 28), $this->GetY() + (28 / 2 - 14), 18, 0, 'PNG', 'https://www.morgancs.com.br', 1, 33.78), 0, 0, 'C', false);
+        $this->Cell(30, 15, $this->Image(public_path('img/const.png'), $this->GetX() + (60 / 2 - 28), $this->GetY() + (28 / 2 - 14), 18, 0, 'PNG', '/', 1, 33.78), 0, 0, 'C', false);
 
         $this->SetTextColor(CSPDF::$FG_SECONDARY_TITLE[0], CSPDF::$FG_SECONDARY_TITLE[1], CSPDF::$FG_SECONDARY_TITLE[2]);
         $this->Cell(75, 7, utf8_decode("EXTRATO DE COMPRAS"), 0, 0, 'L', true);

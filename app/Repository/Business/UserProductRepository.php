@@ -27,7 +27,7 @@ class UserProductRepository extends AbstractRepository implements UserProductInt
 
     public function findPaginate(Request $request)
     {
-        $models = $this->model->query()->with($this->relationships);
+        $models = $this->model->query()->with($this->relationships)->where('status', 'CARRINHO');
 
         if (auth()->user()->type != "PROVIDER") {
             $models = $this->model->query()->with($this->relationships)->where('user_id', auth()->user()->id)->where('status', 'CARRINHO');
@@ -65,6 +65,29 @@ class UserProductRepository extends AbstractRepository implements UserProductInt
         $model->save();
         $this->setMessage('Adiconado ao carrinho', 'success');
         return $model;
+    }
+
+    public function deleteById($id)
+    {
+        $model = $this->model->query()->with($this->relationships);
+      
+        $model = $model->find($id);
+        if (empty($model)) {
+            $this->setMessage('O registro não exite.', 'danger');
+            return null;
+        }
+        $product = Product::find($model->product_id);
+        $product->quantyty = $product->quantyty + $model->quantyty;
+        $product->save();
+
+        if ($this->dependencies($model) == false) {
+            $this->setMessage('O registro não pode ser apagado, o mesmo está vinculado em outro lugar.', 'error');
+            return null;
+        }
+        $this->uploadFiles($model);
+        $model->destroy($model->id);
+        $this->setMessage('O registro foi apagado com sucesso.', 'success');
+        return null;
     }
     
 }
