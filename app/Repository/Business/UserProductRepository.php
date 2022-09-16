@@ -27,7 +27,7 @@ class UserProductRepository extends AbstractRepository implements UserProductInt
 
     public function findPaginate(Request $request)
     {
-        $models = $this->model->query()->with($this->relationships)->where('status', 'CARRINHO');
+        $models = $this->model->query()->with($this->relationships);
 
         if (auth()->user()->type != "PROVIDER") {
             $models = $this->model->query()->with($this->relationships)->where('user_id', auth()->user()->id)->where('status', 'CARRINHO');

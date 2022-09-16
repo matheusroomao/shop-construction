@@ -31,6 +31,14 @@
             <div class="card-body row p-2">
                 <div class="col text-truncate">
                     <span class="card-text mb-0">
+                       Comprador:
+                    </span>
+                    <p class="card-text mb-0 text-secondary">
+                        {{ $model->user->name }}
+                    </p>
+                </div>
+                <div class="col text-truncate">
+                    <span class="card-text mb-0">
                         Preço:
                     </span>
                     <p class="card-text mb-0 text-secondary">
@@ -56,7 +64,7 @@
                 <div class="col d-flex justify-content-end">
                     <div>
                         <a href="{{ route('admin.purchase.export',$model->id) }}" target="_blank" class="btn btn-default">
-                            <i class="bi bi-eye"></i>
+                            <i class="bi-card-list"></i>
                         </a>
                         @if(auth()->user()->type == "PROVIDER")
                         <button type="button" class="btn btn-default" data-bs-toggle="modal" data-bs-target="#modaldelete{{$model->id}}">

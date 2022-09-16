@@ -6,6 +6,10 @@
     <div>
       <h1 class="mb-0">Olá, {{ Auth::user()->name }}!</h1>
       <span class="text-secondary">{{ Auth::user()->email }}!</span>
+      <br>
+      @if(Auth::user()->type != "PROVIDER")
+      <span class="text-secondary">Você já realizou {{ Auth::user()->purchases->count() }} compras conosco! </span>
+      @endif
     </div>
   </div>
 </div>
