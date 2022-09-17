@@ -66,7 +66,13 @@
                 <div class="col text-truncate">
                     <span class="card-text mb-0 ">
                         Status:
+                        @if($model->status == "NOVO")
                         <p class="card-text mb-0 text-secondary text-info"> {{ $model->status}}</p>
+                        @elseif($model->status == "PEDIDO APROVADO")
+                        <p class="card-text mb-0 text-secondary text-success"> {{ $model->status}}</p>
+                        @else
+                        <p class="card-text mb-0 text-secondary text-danger"> {{ $model->status}}</p>
+                        @endif
                     </span>
                 </div>
               
@@ -165,11 +171,11 @@
 <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-center">
         <li class="page-item">
-            <a class="page-link" href="{{ $models->previousPageUrl() }}">Previous</a>
+            <a class="page-link" href="{{ $models->previousPageUrl() }}">Voltar</a>
         </li>
 
         <li class="page-item">
-            <a class="page-link" href="{{ $models->nextPageUrl() }}">Next</a>
+            <a class="page-link" href="{{ $models->nextPageUrl() }}">Proxima</a>
         </li>
     </ul>
 </nav>

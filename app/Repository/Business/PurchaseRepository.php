@@ -30,6 +30,24 @@ class PurchaseRepository extends AbstractRepository implements PurchaseInterface
         parent::__construct($this->model, $this->relationships, $this->dependences, $this->unique, $this->upload);
     }
 
+    public function findPaginate(Request $request)
+    {
+        $models = $this->model->query()->with($this->relationships);
+
+        if (auth()->user()->type != "PROVIDER") {
+            $models = $this->model->query()->with($this->relationships)->where('user_id', auth()->user()->id);
+        }
+        if ($request->exists('search')) {
+            $this->setFilterGlobal($request, $models);
+        } else {
+            $this->setFilterByColumn($request, $models);
+        }
+        $this->setOrder($request, $models);
+        $models = $models->paginate(8);
+        $this->setMessage('Consulta Finalizada', 'success');
+        return $models;
+    }
+
     public function save(Request $request)
     {
         $userProducts = UserProduct::where('status', "CARRINHO")->where('user_id', Auth()->user()->id)->get();
@@ -95,10 +113,12 @@ class PurchaseRepository extends AbstractRepository implements PurchaseInterface
     }
 
     public function exportToPDF(Request $request)
-    {
-        $models = $this->model->query()->with($this->relationships)->where('id', $request->id);
+    { 
+        $models = $this->model->query()->with($this->relationships)->where('id', $request->id)->get();
 
-        $models = $models->get();
+        if (auth()->user()->type != "PROVIDER") {
+            $models = $this->model->query()->with($this->relationships)->where('id', $request->id)->where('user_id', auth()->user()->id)->get();
+        }
         CSPDF::config();
         $pdf = new PurchaseExport();
         $this->setMessage('Consulta Finalizada', 'success');

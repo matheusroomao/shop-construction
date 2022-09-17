@@ -11,8 +11,8 @@ use Illuminate\Support\Facades\Auth;
 class UserProductRepository extends AbstractRepository implements UserProductInterface
 {
     private $model = UserProduct::class;
-    private $relationships = ['product', 'user'];
-    private $dependences = [];
+    private $relationships = ['product', 'user', 'purchase'];
+    private $dependences = ['purchase'];
     private $unique = [];
     private $message = null;
     private $order = 'name';
@@ -70,7 +70,7 @@ class UserProductRepository extends AbstractRepository implements UserProductInt
     public function deleteById($id)
     {
         $model = $this->model->query()->with($this->relationships);
-      
+
         $model = $model->find($id);
         if (empty($model)) {
             $this->setMessage('O registro não exite.', 'danger');
@@ -89,5 +89,4 @@ class UserProductRepository extends AbstractRepository implements UserProductInt
         $this->setMessage('O registro foi apagado com sucesso.', 'success');
         return null;
     }
-    
 }

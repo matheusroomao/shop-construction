@@ -29,14 +29,16 @@
         @foreach($models as $model)
         <div class="card shadow-none mb-2">
             <div class="card-body row p-2">
+                @if(auth()->user()->type == "PROVIDER")
                 <div class="col text-truncate">
                     <span class="card-text mb-0">
-                       Comprador:
+                        Comprador:
                     </span>
                     <p class="card-text mb-0 text-secondary">
                         {{ $model->user->name }}
                     </p>
                 </div>
+                @endif
                 <div class="col text-truncate">
                     <span class="card-text mb-0">
                         Preço:
@@ -56,8 +58,16 @@
                 </div>
 
                 <div class="col text-truncate">
+                    Status:
+
                     <span class="card-text mb-0  text-info">
-                        {{ $model->status }}
+                        @if($model->status == "NOVO")
+                        <p class="card-text mb-0 text-secondary text-info"> {{ $model->status}}</p>
+                        @elseif($model->status == "APROVADO")
+                        <p class="card-text mb-0 text-secondary text-success"> {{ $model->status}}</p>
+                        @else
+                        <p class="card-text mb-0 text-secondary text-danger"> {{ $model->status}}</p>
+                        @endif
                     </span>
                 </div>
 
@@ -66,7 +76,7 @@
                         <a href="{{ route('admin.purchase.export',$model->id) }}" target="_blank" class="btn btn-default">
                             <i class="bi-card-list"></i>
                         </a>
-                        @if(auth()->user()->type == "PROVIDER")
+                        @if(auth()->user()->type == "PROVIDER" && $model->status == "NOVO")
                         <button type="button" class="btn btn-default" data-bs-toggle="modal" data-bs-target="#modaldelete{{$model->id}}">
                             <i class="bi bi-trash-fill"></i>
                         </button>
