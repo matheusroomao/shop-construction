@@ -79,10 +79,11 @@
 
                 <div class="col d-flex justify-content-end">
                     <div>
-
+                        @if($model->status == "NOVO")
                         <button type="button" class="btn btn-default" data-bs-toggle="modal" data-bs-target="#modaldelete{{$model->id}}">
                             <i class="bi bi-trash-fill"></i>
                         </button>
+                        @endif
                         <form action="{{ route('admin.user.product.destroy',$model->id) }}" method="post">
                             @csrf
                             @method('DELETE')
