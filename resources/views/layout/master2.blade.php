@@ -33,7 +33,11 @@
                                 </li>
                                 <li>
                                     <a href="{{ route('admin.user.product.index') }}" class="nav-link px-0 text-white">
-                                        <i class="fs-4 bi bi-cart3"></i> <span class="ms-1 d-none d-sm-inline">Pedidos</span> </a>
+                                        <i class="fs-4 bi bi-cart3"></i> <span class="ms-1 d-none d-sm-inline">Pedidos</span>
+                                        @if(auth()->user()->type != 'PROVIDER')
+                                        <span class="badge badge-pill bg-danger">{{ auth()->user()->userProductQuantyty->count() }} </span>
+                                        @endif
+                                    </a>
                                 </li>
                                 <li>
                                     <a href="{{ route('admin.product.index') }}" class="nav-link px-0 text-white">

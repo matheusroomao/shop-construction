@@ -63,7 +63,12 @@ class User extends Authenticatable
 
     public function userProduct()
     {
-        return $this->hasOne(UserProduct::class);
+        return $this->hasMany(UserProduct::class);
+    }
+
+    public function userProductQuantyty()
+    {
+        return $this->hasMany(UserProduct::class)->where('status','CARRINHO');
     }
 
     public function purchases()

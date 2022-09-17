@@ -66,7 +66,7 @@
                 <div class="col text-truncate">
                     <span class="card-text mb-0 ">
                         Status:
-                        @if($model->status == "NOVO")
+                        @if($model->status == "CARRINHO")
                         <p class="card-text mb-0 text-secondary text-info"> {{ $model->status}}</p>
                         @elseif($model->status == "PEDIDO APROVADO")
                         <p class="card-text mb-0 text-secondary text-success"> {{ $model->status}}</p>
@@ -79,7 +79,7 @@
 
                 <div class="col d-flex justify-content-end">
                     <div>
-                        @if($model->status == "NOVO")
+                        @if($model->status == "CARRINHO")
                         <button type="button" class="btn btn-default" data-bs-toggle="modal" data-bs-target="#modaldelete{{$model->id}}">
                             <i class="bi bi-trash-fill"></i>
                         </button>
